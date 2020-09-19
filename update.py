@@ -3,7 +3,7 @@ import sys
 
 
 # for linux
-os.system('find -name .vscode | xargs rm -rf')
+#os.system('find -name .vscode | xargs rm -rf')
 
 # update source code to Coding
 #os.system('git init')
