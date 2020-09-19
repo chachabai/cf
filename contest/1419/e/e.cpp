@@ -55,12 +55,15 @@ int main() {
 			print(1);
 			continue;
 		}
-		if (pfactor.size() == 1) {
-			int x = pfactor[0].first, r = 1;
-			for (int i = pfactor[0].second; i > 0; --i) {
-				r *= x;
-				std::cout << r << " ";
+		auto printp = [&](int i) {
+			int r = 1;
+			for (int id = 0; id < pfactor[i].second; ++id) {
+				r *= pfactor[i].first;
+				std::cout << r <<" ";
 			}
+		};
+		if (pfactor.size() == 1) {
+			printp(0);
 			println;
 			print(0);
 			continue;
@@ -80,13 +83,6 @@ int main() {
 		auto vis = [&](int x) {
 			if (x <= sq) f1[x] = true;
 			else f2[n / x] = true;
-		};
-		auto printp = [&](int i) {
-			int r = 1;
-			for (int id = 0; id < pfactor[i].second; ++id) {
-				r *= pfactor[i].first;
-				std::cout << r <<" ";
-			}
 		};
 		std::cout << n << " ";
 		printp(0);

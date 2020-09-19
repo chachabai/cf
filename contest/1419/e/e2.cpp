@@ -68,36 +68,23 @@ int main() {
 			print(0);
 			continue;
 		}
-		std::vector<int> factor;
-		int sq = std::sqrt(n + 0.2);
-		std::vector<int> f1(sq + 2), f2(sq + 2);
+		std::map<int, bool> mp;
 		for (int i = 2; i * i <= n; ++i) {
 			if (n % i == 0) {
-				factor.emplace_back(i);
-				if(i * i != n) factor.emplace_back(n / i);
+				mp[i] = mp[n / i] = 1;
 			}
 		}
-		auto isv = [&](int x) {
-			return x <= sq ? f1[x] : f2[n / x];
-		};
-		auto vis = [&](int x) {
-			if (x <= sq) f1[x] = true;
-			else f2[n / x] = true;
-		};
 		std::cout << n << " ";
 		printp(0);
-		for (int i = 1; i < pfactor.size(); ++i) {
-			int xx = pfactor[i - 1].first * pfactor[i].first;
-			for (auto x : factor) if (!isv(x) && x % xx == 0) {
-				vis(x);
-				std::cout << x << " ";
+		for (int i = 1; i <= pfactor.size(); ++i) {
+			int xx = pfactor[i - 1].first * pfactor[i % pfactor.size()].first;
+			std::cout << xx << " ";
+			int nx = n / xx;
+			for (int i = 2; i * i <= nx; ++i) if (nx % i){
+				if (mp[i * xx]) std::cout << i * xx << " ";
+				if (mp[n / i * xx]) std::cout << n / i * xx << " ";
 			}
-			printp(i);
-		}
-		int xx = pfactor.back().first * pfactor[0].first;
-		for (auto x : factor) if (!isv(x) && x % xx == 0) {
-			vis(x);
-			std::cout << x << " ";
+			if (i != pfactor.size()) printp(i);
 		}
 		println;
 		print(0);
