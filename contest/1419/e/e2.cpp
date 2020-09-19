@@ -4,7 +4,7 @@
 #define println std::cout << std::endl;
 using LL = long long;
 
-const int N = 1e5 + 9;
+const int N = 1e5 + 5;
 bool isp[N];
 std::vector<int> p;
 
