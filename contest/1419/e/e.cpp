@@ -4,7 +4,7 @@
 #define println std::cout << std::endl;
 using LL = long long;
 
-const int N = 1e5 + 9;
+const int N = 1e5 + 5;
 bool isp[N];
 std::vector<int> p;
 
@@ -33,7 +33,7 @@ int main() {
 	while (cas--) {
 		int n;
 		std::cin >> n;
-		int nfactor = 0, nn = n;
+		int nn = n;
 		std::vector<std::pair<int, int>> pfactor;
 		for (int i = 0; p[i] * p[i] <= nn; ++i) {
 			if (nn % p[i] == 0) {
@@ -42,65 +42,38 @@ int main() {
 					nn /= p[i];
 					++np;
 				}
-				nfactor += np;
 				pfactor.push_back({p[i], np});
 			}
 		}
-		if (nn > 1) {
-			pfactor.push_back({nn, 1});
-			++nfactor;
-		}
-		if (nfactor == 2 && pfactor.size() == 2) {
-			std::cout << pfactor[0].first << " " << pfactor[1].first << " " << n << std::endl;
-			print(1);
-			continue;
-		}
-		auto printp = [&](int i) {
-			int r = 1;
-			for (int id = 0; id < pfactor[i].second; ++id) {
-				r *= pfactor[i].first;
-				std::cout << r <<" ";
-			}
-		};
-		if (pfactor.size() == 1) {
-			printp(0);
-			println;
-			print(0);
-			continue;
-		}
-		std::vector<int> factor;
-		int sq = std::sqrt(n + 0.2);
-		std::vector<int> f1(sq + 2), f2(sq + 2);
-		for (int i = 2; i * i <= n; ++i) {
-			if (n % i == 0) {
-				factor.emplace_back(i);
-				if(i * i != n) factor.emplace_back(n / i);
-			}
-		}
-		auto isv = [&](int x) {
-			return x <= sq ? f1[x] : f2[n / x];
-		};
-		auto vis = [&](int x) {
-			if (x <= sq) f1[x] = true;
-			else f2[n / x] = true;
-		};
+		if (nn > 1) pfactor.push_back({nn, 1});
+		std::set<int> S;
+		S.insert(n);
 		std::cout << n << " ";
-		printp(0);
-		for (int i = 1; i < pfactor.size(); ++i) {
-			int xx = pfactor[i - 1].first * pfactor[i].first;
-			for (auto x : factor) if (!isv(x) && x % xx == 0) {
-				vis(x);
-				std::cout << x << " ";
-			}
-			printp(i);
+		for (int i = 0; i < pfactor.size(); ++i) {
+			S.insert(pfactor[i].first);
+			S.insert(pfactor[i].first * pfactor[(i + 1) % pfactor.size()].first);
 		}
-		int xx = pfactor.back().first * pfactor[0].first;
-		for (auto x : factor) if (!isv(x) && x % xx == 0) {
-			vis(x);
-			std::cout << x << " ";
+		for (int i = 0; i < pfactor.size(); ++i) {
+			std::cout << pfactor[i].first << " ";
+			int ni = n / pfactor[i].first;
+			for (int j = 2; j * j <= ni; ++j) if (ni % j == 0){
+				int c[2] = {j * pfactor[i].first, ni / j * pfactor[i].first};
+				for (int k = 0; k < 2; ++k) {
+					if (S.find(c[k]) == S.end()) {
+						S.insert(c[k]);
+						std::cout << c[k] << " ";
+					}
+				}
+			}
+			int x = pfactor[i].first * pfactor[(i + 1) % pfactor.size()].first;
+			if (pfactor.size() == 2) {
+				if (x != n && i != 1) std::cout << x << " ";
+			} else if (x != n) std::cout << x << " ";
 		}
 		println;
-		print(0);
+		if (pfactor.size() == 2 && pfactor[0].second == 1 && pfactor[1].second == 1) {
+			print(1);
+		} else print(0);
 	}
 	return 0;
 }
