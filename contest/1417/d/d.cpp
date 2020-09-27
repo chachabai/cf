@@ -31,6 +31,7 @@ int main() {
 			ans.push_back({i, 1, a[i] / i});
 		}
 		for (int i = 2; i <= n; ++i) ans.push_back({1, i, s});
+		print(ans.size());
 		for (auto [i, j ,x] : ans) std::cout << i << " " << j << " " << x << std::endl;
 	}
 	return 0;
