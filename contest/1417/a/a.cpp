@@ -14,10 +14,10 @@ int main() {
 		std::cin >> n >> k;
 		std::vector<int> a(n);
 		for (auto &x : a) std::cin >> x;
-		std::sort(a.begin(), a.end());
+		auto mi = std::min_element(a.begin(), a.end());
 		int r = 0;
-		for (int i = 1; i < n; ++i) {
-			r += (k - a[i]) / a[0];
+		for (auto it = a.begin(); it != a.end(); ++it) if (it != mi) {
+			r += (k - *it) / *mi;
 		}
 		print(r);
 	}

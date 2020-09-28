@@ -19,8 +19,7 @@ int main() {
 		std::vector<int> d(n + 1, -1);
 		for (int i = 1; i <= n; ++i) {
 			int x = a[i];
-			if (d[x] == -1) d[x] = i - now[x];
-			else d[x] = std::max(d[x], i - now[x]);
+			d[x] = std::max(d[x], i - now[x]);
 			now[x] = i;
 		}
 		for (int i = 1; i <= n; ++i) if (d[i] != -1) {
