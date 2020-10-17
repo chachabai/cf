@@ -3,6 +3,8 @@
 #define print(x) std::cout << (x) << std::endl
 #define println std::cout << std::endl
 using LL = long long;
+using pii = std::pair<int, int>;
+using pll = std::pair<LL, LL>;
 
 int main() {
 	//freopen("in","r",stdin);
