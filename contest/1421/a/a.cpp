@@ -15,14 +15,7 @@ int main() {
 	while (cas--) {
 		int a, b;
 		std::cin >> a >> b;
-		int r = 0, n2 = 1;
-		while (a > 0 || b > 0) {
-			if ((a & 1) != (b & 1)) r += n2;
-			n2 *= 2;
-			a >>=1;
-			b >>=1;
-		}
-		print(r);
+		print(a^b);
 	}
 	return 0;
 }
