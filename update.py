@@ -1,11 +1,9 @@
 import os
 import sys
 
-
 # for linux
 #os.system('find -name .vscode | xargs rm -rf')
 
-# update source code to Coding
 #os.system('git init')
 os.system('git add .')
 
